@@ -472,8 +472,8 @@ var allItems = [
 			"spellType": "blast"
 		},
 		"ru": {
-			"name": "!!Мистическое Копьё",
-			"text": "!!!Когда вы накладываете мистический заряд, его дистанция равна 300 футам."
+			"name": "МУЧИТЕЛЬНЫЙ ВЗРЫВ",
+			"text": "Когда вы накладываете мистический заряд, добавьте модификатор Харизмы к урону, причиняемому при попадании."
 		}
 	},
 	{
@@ -646,8 +646,8 @@ var allItems = [
 	},
 	{
 		"en": {
-			"name": "",
-			"text": "",
+			"name": "ASPECT OF THE MOON",
+			"text": "You no longer need to sleep and can't be forced to sleep by any means. To gain the benefits of a long rest, you can spend all 8 hours doing light activity, such as reading your Book of Shadows and keeping watch.",
 			"source": "XGTE",
 			"minLevel": "",
 			"pactType": "book"
@@ -659,8 +659,8 @@ var allItems = [
 	},
 	{
 		"en": {
-			"name": "",
-			"text": "",
+			"name": "RELENTLESS HEX",
+			"text": "Your curse creates a temporary bond between you and your target. As a bonus action, you can magically teleport up to 30 feet to an unoccupied space you can see within 5 feet of the target cursed by your hex spell or by a warlock feature of yours, such as Hexblade's Curse or Sign oflll Omen. To teleport in this way, you must be able to see the cursed target.",
 			"source": "XGTE",
 			"minLevel": "7",
 			"spellType": "hex"
@@ -672,10 +672,11 @@ var allItems = [
 	},
 	{
 		"en": {
-			"name": "",
-			"text": "",
+			"name": "MADDENING HEX",
+			"text": "As a bonus action, you cause a psychic disturbance around the target cursed by your hex spell or by a warlock feature of yours, such as Hex blade's Curse or Sign of Ill Omen. When you do so, you deal psychic damage to the cursed target and each creature of your choice that you can see within 5 feet of it. The psychic damage equals your Charisma modifier (minimum of 1 damage). To use this invocation, you must be able to see the cursed target, and it must be within 30 feet of you.",
 			"source": "XGTE",
-			"minLevel": "5",			"spellType": "hex"
+			"minLevel": "5",			
+			"spellType": "hex"
 		},
 		"ru": {
 			"name": "Безумное Проклятие",
@@ -684,8 +685,8 @@ var allItems = [
 	},
 	{
 		"en": {
-			"name": "",
-			"text": "",
+			"name": "TOMB OF LEVISTUS",
+			"text": "As a reaction when you take damage, you can entomb yourself in ice, which melts away at the end of your next turn. You gain 10 temporary hit points per warlock level, which take as much of the triggering damage as possible. Immediately after you take the damage, you gain vulnerability to fire damage, your speed is reduced to 0, and you are incapacitated. These effects, including any remaining temporary bit points, all end when the ice melts.<br> Once you use this invocation, you can't use it again until you finish a short or long rest.",
 			"source": "XGTE",
 			"minLevel": "5",
 			"spellType": "hex"
@@ -697,8 +698,8 @@ var allItems = [
 	},
 	{
 		"en": {
-			"name": "",
-			"text": "",
+			"name": "GIFT OF THE EVER-LIVING ONES",
+			"text": "Whenever you regain hit points while your familiar is within 100 feet of you, treat any dice rolled to determine the hit points you regain as having rolled their maximum value for you.",
 			"source": "XGTE",
 			"minLevel": "",
 			"pactType": "chain"
@@ -710,8 +711,8 @@ var allItems = [
 	},
 	{
 		"en": {
-			"name": "",
-			"text": "",
+			"name": "GIFT OF THE DEPTHS",
+			"text": "You can breathe underwater, and you gain a swimming  speed equal to your walking speed. You can also cast water breathing once without expending a spell slot. You regain the ability to do so when you finish a long rest.",
 			"source": "XGTE",
 			"minLevel": "5"
 		},
@@ -722,8 +723,8 @@ var allItems = [
 	},
 	{
 		"en": {
-			"name": "",
-			"text": "",
+			"name": "LANCE OF LETHARGY",
+			"text": "Once on each of your turns when you hit a creature with your eldritch blast, you can reduce that creature's speed by 10 feet until the end of your next turn.",
 			"source": "XGTE",
 			"minLevel": "",
 			"spellType": "blast"
@@ -735,8 +736,8 @@ var allItems = [
 	},
 	{
 		"en": {
-			"name": "",
-			"text": "",
+			"name": "ELDRITCH SMITE",
+			"text": "Once per turn when you hit a creature with your pact weapon, you can expend a warlock spell slot to deal an extra ld8 force damage to the target, plus another ld8 per level of the spell slot, and you can knock the target prone if it is Huge or smaller.",
 			"source": "XGTE",
 			"minLevel": "5",
 			"pactType": "blade"
@@ -748,8 +749,8 @@ var allItems = [
 	},
 	{
 		"en": {
-			"name": "",
-			"text": "",
+			"name": "CLOAK OF FLIES",
+			"text": "As a bonus action, you can surround yourself with a magical aura that looks like buzzing flies. The aura extends 5 feet from you in every direction, but not through total cover. It lasts until you're incapacitated or you dismiss it as a bonus action. The aura grants you advantage on Charisma (Intimidation) checks but disadvantage on a ll other Charisma checks. Any other creature that starts its turn in the aura takes poison damage equal to your Charisma modifier (minimum of 0 damage). Once you use this invocation, you can't use it again until you finish a short or long rest.",
 			"source": "XGTE",
 			"minLevel": "5"
 		},
@@ -760,8 +761,8 @@ var allItems = [
 	},
 	{
 		"en": {
-			"name": "",
-			"text": "",
+			"name": "TRICKSTER'S ESCAPE",
+			"text": "You can cast freedom of movement once on yourself without expending a spell slot. You regain the ability to do so when you finish a long rest. ",
 			"source": "XGTE",
 			"minLevel": "7"
 		},
@@ -772,20 +773,21 @@ var allItems = [
 	},
 	{
 		"en": {
-			"name": "",
-			"text": "",
+			"name": "GHOSTLY GAZE",
+			"text": "As an action, you gain the ability to see through solid objects to a range of 30 feet. Within that ra nge, you have darkvision if you don't already have it. This special sight lasts for 1 minute or until your concentration ends (as if you were concentrating on a speU). During that time, you perceive objects as ghostly, transparent images. Once you use this invocation, you can't use it againuntil you finish a short or long rest.", 
 			"source": "XGTE",
 			"minLevel": "7"
 		},
 		"ru": {
 			"name": "Призрачный Взор",
+			"nic": "Призрачный взгляд",
 			"text": "В качестве действия вы получаете возможность видеть сквозь твердые объекты в радиусе 30 футов. В этом диапазоне у вас есть тёмное зрение, если у вас его ещё нет. Это особое зрение длится 1 минуту или до тех пор, пока ваша концентрация не закончится (как если бы вы концентрировались на заклинании). За это время вы воспринимаете объекты как призрачные, прозрачные изображения. Использовав это воззвание, вы не сможете использовать его снова, пока не закончите короткий или продолжительный отдых."
 		}
 	},
 	{
 		"en": {
-			"name": "",
-			"text": "",
+			"name": "SHROUD OF SHADOW",
+			"text": "You can cast invisibility at will, without expending a spelJ slot.",
 			"source": "XGTE",
 			"minLevel": "15"
 		},
@@ -796,8 +798,8 @@ var allItems = [
 	},
 	{
 		"en": {
-			"name": "",
-			"text": "",
+			"name": "IMPROVED PACT WEAPON",
+			"text": "You can use any weapon you summon with your Pact of the Blade feature as a spellcasting focus for your warlock spells. In addition, the weapon gains a +l bonus to its attack and damage rolls, unless it is a magic weapon that already has a bonus to those rolls. Finally, the weapon you conjure can be a shortbow, longbow, light crossbow, or heavy crossbow.",
 			"source": "XGTE",
 			"minLevel": "",
 			"pactType": "blade"
@@ -809,8 +811,8 @@ var allItems = [
 	},
 	{
 		"en": {
-			"name": "",
-			"text": "",
+			"name": "GRASP OF HADAR",
+			"text": "Once on each of your turns when you hit a creature with your eldritch blast, you can move that creature in a straight line 10 feet closer to you.",
 			"source": "XGTE",
 			"minLevel": "",
 			"pactType": "blade",
