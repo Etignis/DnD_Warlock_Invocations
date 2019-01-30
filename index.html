@@ -104,7 +104,7 @@
 			</custom-select>
 		</div>
 		<div class='mediaWidth' v-show="aHiddenItemsList.length>0">
-			<label class="filterLabel">Скрытые черты ({{aHiddenItemsList.length}})</label>
+			<label class="filterLabel">Скрытые воззвания ({{aHiddenItemsList.length}})</label>
 			<div id="HiddenItems">
 				<a href='#' class='bReturnUnvisible' @click.stop="unhideAll">Вернуть все обратно</a>
 				<hiddenitem 
@@ -124,7 +124,7 @@
 	
 		<div id='lockedItemsArea' v-show="aLockedItemsList.length>0 && bCardsAreVisible"  v-cloak>
 			<div class='flex_row noprint'>
-				<span class='topHeader'>Закрепленные черты ({{aLockedItemsList.length}})</span>
+				<span class='topHeader'>Закрепленные воззвания ({{aLockedItemsList.length}})</span>
 				<span class='bUnlockAll' @click="unlockAll">Открепить все</span>
 			</div>
 			<div class='content row'>
@@ -148,7 +148,7 @@
 				</card>
 			</div>
 			<div class='flex_row noprint'>
-				<span class='bottomHeader'>Каталог черт ({{aItemsList.length}})</span>
+				<span class='bottomHeader'>Каталог воззваний колдуна ({{aItemsList.length}})</span>
 			</div>
 		</div>
 	
@@ -177,12 +177,12 @@
 		</div>
 		
 		<div id='info_text'>
-			<h1>Черты D&amp;D5</h2>
+			<h1>Воззвания колдуна D&amp;D5</h2>
 			<h2>
 				Что есть
 			</h2>
 			<p>
-				Список черт (feats) D&D5 на русском и английском языках.
+				Список воззваний (eldritch invocations) D&D5 на русском и английском языках.
 			</p>
 			<p>
 				Черты можно фильтровать по:
