@@ -58,6 +58,17 @@
 			</combobox>
 		</div>
 		<div class='mediaWidth'>
+			<custom-select
+				id="LevelSelect"
+				ref="LevelSelect"
+				title="Минимальный уровень"
+				:selected="sLevelSelected"
+				:items="aLevelList"
+				@iclick="onLevelChange($event)"
+			>
+			</custom-select>
+		</div>
+		<div class='mediaWidth'>
 			<combobox
 				id="SpellTypeCombobox"
 				ref="SpellTypeCombobox"

@@ -261,6 +261,17 @@ Vue.component('custom-select', {
 	computed: {
 		isOpen: function(){
 			return (this.open!=null)?this.open : this.bOpen || false;
+		},
+		selectedTile: function() {
+			// let sKey = this.selected // key
+			// let ret = sKey;
+			// try{
+				// ret = this.items.filter(el => el.key == sKey)[0].title;
+			// } catch (err) {
+				// console.dir(err);
+				// console.log(sKey);
+			// }
+			// return ret
 		}
 	},
 	methods: {
@@ -433,6 +444,7 @@ var app = new Vue({
 		aItems: allItems,
 		sLang: "ru",
 		sSort: "typeAlpha",
+		sLevel: "0",
 		sSearch: "",
 		aHiddenItems: [],
 		aLockedItems: [],
@@ -549,8 +561,38 @@ var app = new Vue({
 			return a;
 		},
 		
+		aLevel: function() {
+			var a = this.aItems.filter(el => el.en.minLevel).map(el => el.en.minLevel);
+			a.push(0);
+			return a.filter(function(item, pos, self) {
+					return self.indexOf(item) == pos;
+			}).sort((a,b)=> a-b);
+		},
+		aLevelList: function(){
+			// let a=[];
+			// for (var key in this.aLevel){
+				// if(this.aLevel[key].visible !== false){
+					// a.push({
+						// key: key,
+						// title: this.aLevel[key].text[this.sLang].title
+					// });
+				// }
+			// }
+			// return a;
+			let a=this.aLevel.map(el => ({key: el, title: el==0? "Любой" : el}));
+			
+			return a;
+			//return this.aLevel;
+		},
+		
 		sSortSelected: function(){
 			return this.aSort[this.sSort].text[this.sLang].title;
+		},
+		
+		sLevelSelected: function(){
+			//return this.aLevel[this.sLevel].text[this.sLang].title;
+			return this.aLevelList.filter(el => el.key == this.sLevel)[0].title;
+			//return String(this.sLevel);
 		},
 		
 		
@@ -567,6 +609,7 @@ var app = new Vue({
 					this.aSrcSelected.indexOf(oItem.en.source)>-1 && 
 					(this.aPactTypeSelected.length? this.aPactTypeSelected.indexOf(oItem.en.pactType)>-1 : true) && 
 					(this.aSpellTypeSelected.length? this.aSpellTypeSelected.indexOf(oItem.en.spellType)>-1 : true) && 
+					(Number(this.sLevel)>0 && Number(oItem.en.minLevel) >= Number(this.sLevel) || this.sLevel == 0 || !this.sLevel) &&
 						(
 						oItem.en.name.toLowerCase().indexOf(this.sNameInput)>-1 || 
 						oItem.ru.name.toLowerCase().indexOf(this.sNameInput)>-1
@@ -625,10 +668,11 @@ var app = new Vue({
 					"text": oItem[this.sLang].text || oItem.en.text,
 					"src": oItem[this.sLang].source || oItem.en.source,
 					"source": this.aSources[oItem.en.source].text[this.sLang].title,
-					"pactType": this.aPactTypes[oItem.en.pactType].text[this.sLang].title,
-					"pactTypeNum": this.aPactTypes[oItem.en.pactType].i,
-					"spellType": this.aSpellTypes[oItem.en.spellType].text[this.sLang].title,
-					"spellTypeNum": this.aSpellTypes[oItem.en.spellType].i,
+					"pactType": oItem.en.pactType? oDict.pact.text[this.sLang].title + this.aPactTypes[oItem.en.pactType].text[this.sLang].title : "",
+					"pactTypeNum": oItem.en.pactType? this.aPactTypes[oItem.en.pactType].i: -1,
+					"spellType": oItem.en.spellType? oDict.spell.text[this.sLang].title  + this.aSpellTypes[oItem.en.spellType].text[this.sLang].title: "",
+					"spellTypeNum": oItem.en.spellType? this.aSpellTypes[oItem.en.spellType].i: -1,
+					"minLevel": oItem.en.minLevel? oDict.level.text[this.sLang].title + oItem.en.minLevel : "",
 					"color": oItem.en.type,
 					"locked": this.aLockedItems.indexOf(oItem.en.name)>-1,
 					"selected": this.aSelectedLockedItems.indexOf(oItem.en.name)>-1
@@ -697,6 +741,11 @@ var app = new Vue({
 			this.sSort = sKey;
 			this.updateHash();
 			this.setConfig("sort", sKey);
+		},
+		onLevelChange: function(sKey){
+			this.sLevel = sKey;
+			this.updateHash();
+			this.setConfig("level", sKey);
 		},
 		onSearchName: function(sValue){
 			this.sSearch = sValue.trim();
@@ -821,17 +870,20 @@ var app = new Vue({
 			if(this.aSrcSelected.length != this.aSrcList.length) {
 				aHash.push("src="+this.aSrcSelected.join(","));
 			}
-			if(this.aPactTypeSelected.length != this.aPactTypeList.length) {
+			if(this.aPactTypeSelected.length != this.aPactTypeList.length && this.aPactTypeSelected.length >0) {
 				aHash.push("pactType="+this.aPactTypeSelected.join(","));
 			}
-			if(this.aSpellTypeSelected.length != this.aSpellTypeList.length) {
+			if(this.aSpellTypeSelected.length != this.aSpellTypeList.length && this.aSpellTypeSelected.length >0) {
 				aHash.push("spellType="+this.aSpellTypeSelected.join(","));
 			}
 			if(this.sLang != "ru") {
 				aHash.push("lang="+this.sLang);
 			}
-			if(this.sSort != "typeAlpha") {
-				aHash.push("sort="+this.sSort);
+			// if(this.sSort != "typeAlpha") {
+				// aHash.push("sort="+this.sSort);
+			// }
+			if(this.sLevel != "0") {
+				aHash.push("level="+this.sLevel);
 			}
 			
 			if(aHash.length>0) {
@@ -887,6 +939,9 @@ var app = new Vue({
 			}
 			if(oHash.sort) {
 				this.sSort = oHash.sort
+			}
+			if(oHash.level) {
+				this.sLevel = oHash.level
 			}
 			if(oHash.q) {
 				this.sSearch = oHash.q[0];
