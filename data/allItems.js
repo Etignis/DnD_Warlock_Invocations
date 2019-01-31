@@ -227,6 +227,32 @@ var oSort = {
 	}
 }
 
+var oView = {
+	"card": {
+		"text": {
+			"en": {
+				"title": "Cards"
+			},
+			"ru": {
+				"title": "Карточки"
+			}
+		},
+		"checked": true,
+		"visible": true
+	},
+	"text": {
+		"text": {
+			"en": {
+				"title": "Text"
+			},
+			"ru": {
+				"title": "Текст"
+			}
+		},
+		"visible": true
+	}
+}
+
 var oDict = {
 	"pact": {
 		"text": {
@@ -255,6 +281,38 @@ var oDict = {
 			},
 			"ru": {
 				"title": "умение "
+			}
+		}
+	},
+	
+	"pactText": {
+		"text": {
+			"en": {
+				"title": "Pact"
+			},
+			"ru": {
+				"title": "Договор"
+			}
+		}
+	},
+	"levelText": {
+		"text": {
+			"en": {
+				"title": "Min lvl: "
+			},
+			"ru": {
+				"title": "Уровень"
+			}
+		}
+	},
+	
+	"spellText": {
+		"text": {
+			"en": {
+				"title": "Abilyty"
+			},
+			"ru": {
+				"title": "Умение"
 			}
 		}
 	}

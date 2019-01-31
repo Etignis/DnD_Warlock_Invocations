@@ -995,19 +995,10 @@ table td:first-child {
 }
 .cardContainer {
   page-break-inside: avoid;
-  width: 2.5in;
+  width: auton;
   margin-right: 1px;
   margin-top: 1px;
-  float: left;
-}
-.cardContainer .ac,
-.cardContainer .props,
-.cardContainer .damage {
-  display: block;
-  padding: 0.1em 0.9em;
-}
-.cardContainer .weight {
-  margin-left: .2em;
+  float: none;
 }
 .cardContainer .bottomPanel {
   position: absolute;
@@ -1025,21 +1016,25 @@ table td:first-child {
 }
 .cardContainer.textView .ItemCard {
   height: auto;
-  border-width: 3px;
+  background: none;
+  border-width: 1px;
   position: relative;
   color: #666666;
   margin-bottom: 1.5rem;
+  border: 1px solid #ddd;
 }
 .cardContainer.textView .ItemCard .content {
   position: relative;
   min-height: 19rem;
   background-image: none;
+  border-radius: 0.2rem;
 }
 .cardContainer.textView .ItemCard .header_info {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  border-bottom: 1px solid #000;
+  border-bottom: none;
+  /*1px solid @mainColor;*/
 }
 .cardContainer.textView .ItemCard .header_info div,
 .cardContainer.textView .ItemCard .header_info h1 {
@@ -1048,6 +1043,7 @@ table td:first-child {
 }
 .cardContainer.textView .ItemCard .header_info h1 {
   padding-top: 0.1em;
+  text-align: left;
 }
 .cardContainer.textView .ItemCard .header_info .subtitle {
   margin-left: 1.4rem;
@@ -1055,6 +1051,7 @@ table td:first-child {
   text-align: left;
 }
 .cardContainer.textView .ItemCard .header_info .prerequisite {
+  margin-top: 0.2em;
   margin-left: 1em;
   font-style: italic;
 }
@@ -1082,12 +1079,26 @@ table td:first-child {
 .cardContainer.textView .ItemCard .bottom_info {
   bottom: 1em;
 }
+.cardContainer.textView h1 {
+  font-size: 120%;
+  text-transform: uppercase;
+  margin: 0;
+  font-weight: normal;
+  color: #770002;
+  text-align: left;
+}
 .ItemCard {
-  height: 3.5in;
   background: #000;
-  border: 9px solid #000;
+  border: 3px solid #000;
+  float: none;
+  width: auto;
+  max-width: 90rem;
+  margin: 0 auto;
+  height: auto;
+  border-width: 3px;
   position: relative;
   color: #666666;
+  margin-bottom: 1.5rem;
 }
 .ItemCard.selected {
   transform: scale(1.02);
@@ -1130,11 +1141,6 @@ table td:first-child {
 .ItemCard .content {
   border-radius: 5px;
   background: #fff;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -1142,11 +1148,16 @@ table td:first-child {
   background-repeat: no-repeat;
   background-position: center center /*5em*/;
   background-size: contain;
+  min-height: 19rem;
 }
 .ItemCard .header_info {
-  flex-direction: column;
-  flex-wrap: nowrap;
-  align-items: stretch;
+  /* flex-direction: column; */
+  /* flex-wrap: nowrap; */
+  /* align-items: stretch; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #000;
 }
 .ItemCard .bottom_info {
   flex-direction: column;
@@ -1172,30 +1183,26 @@ table td:first-child {
   text-align: center;
   text-transform: uppercase;
   background: rgba(255, 255, 255, 0.7);
+  padding-top: 0.1em;
 }
 .ItemCard .subtitle {
   text-align: center;
   background: rgba(255, 255, 255, 0.7);
-}
-.ItemCard .coast {
-  /*position: absolute;
-      text-align: center;
-      bottom: 2rem;
-      right: 1.4rem;
-      left: 1.4rem;*/
-  padding-left: 0.1em;
-}
-.ItemCard .weight {
-  padding-right: 0.1em;
 }
 .ItemCard .info {
   margin-top: auto;
   margin-bottom: 1.6rem;
   overflow-y: auto;
   color: #000;
-  display: none;
   background: #fff;
   line-height: normal;
+  display: block;
+  margin-top: 0;
+  padding: 0.9em;
+  margin-bottom: 2rem;
+  padding-bottom: 0;
+  max-height: 900rem;
+  line-height: 140%;
 }
 .ItemCard .info .randomProp {
   cursor: pointer;
@@ -1351,61 +1358,6 @@ table td:first-child {
 .lockedItem .bLockItem {
   color: #000;
   text-shadow: 0 0 2px #487EC5;
-}
-.weapon .ItemCard {
-  background-color: #e91e63;
-  border-color: #e91e63;
-}
-.weapon.textView h1 {
-  color: #e91e63;
-}
-.armor .ItemCard {
-  background-color: #4fc3f7;
-  border-color: #4fc3f7;
-}
-.armor.textView h1 {
-  color: #4fc3f7;
-}
-/*
-.regular{
-  @mainColor: #ffb74d;
-    .ItemCard{
-        background-color: @mainColor;
-        border-color: @mainColor;
-    }
-  &.textView{
-    h1{
-      color: @mainColor;
-    }
-  }
-}*/
-.racial .ItemCard {
-  background-color: #ffb74d;
-  border-color: #ffb74d;
-}
-.racial.textView h1 {
-  color: #ffb74d;
-}
-.skill .ItemCard {
-  background-color: #81C784;
-  border-color: #81C784;
-}
-.skill.textView h1 {
-  color: #81C784;
-}
-.tool .ItemCard {
-  background-color: #A1887F;
-  border-color: #A1887F;
-}
-.tool.textView h1 {
-  color: #A1887F;
-}
-.world .ItemCard {
-  background-color: #ba68c8;
-  border-color: #ba68c8;
-}
-.world.textView h1 {
-  color: #ba68c8;
 }
 .p_side {
   background: rgba(0, 0, 0, 0.4);

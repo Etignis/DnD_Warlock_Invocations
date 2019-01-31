@@ -72,7 +72,7 @@
 			<combobox
 				id="SpellTypeCombobox"
 				ref="SpellTypeCombobox"
-				title="Умения"
+				title="Требуется умение"
 				:items="aSpellTypeList"
 				:opened="bSpellTypesOpend"
 				@iclick="onSpellTypeChange($event)"
@@ -91,6 +91,17 @@
 				@opened="onSourcesToggled($event)"
 			>
 		</combobox>
+		</div>
+		<div class='mediaWidth'>
+			<custom-select
+				id="ViewSelect"
+				ref="ViewSelect"
+				title="Вид"
+				:selected="sViewSelected"
+				:items="aViewtList"
+				@iclick="onViewChange($event)"
+			>
+			</custom-select>
 		</div>
 		<!--div class='mediaWidth'>
 			<custom-select
@@ -153,6 +164,7 @@
 					:pre="item.pre"
 					:selected="item.selected"
 					:locked="item.locked"
+					:view="sView"
 					@unlock="unlockCard(item)"
 					@select="selectLockedCard(item)"
 				>
@@ -164,7 +176,7 @@
 		</div>
 	
 		<div class="row itemsContainer" :class="{noprint: aLockedItemsList.length>0}" :data-itemcount="aItemsList.length" v-show="bCardsAreVisible">
-			<span class='itemCounter noprint' v-show="aLockedItemsList.length<1"  v-cloak title='Количество элементов'>{{aItemsList.length}}</span>
+			<span class='itemCounter noprint' v-show="aLockedItemsList.length<1"  v-cloak title='Количество элементов' style='position: absolute'>{{aItemsList.length}}</span>
 			<card
 				v-for="item in aItemsList"
 				:key="item.name"
@@ -177,9 +189,13 @@
 				:pact-type="item.pactType"
 				:spell-type="item.spellType"
 				:min-level="item.minLevel"
+				:spell-title="item.spellTitle"
+				:level-title="item.levelTitle"
+				:pact-title="item.pactTitle"
 				:color="item.color"
 				:selected="item.selected"
 				:pre="item.pre"
+				:view="sView"
 				@lock="lockCard(item)"
 				@hide="hideCard(item)"
 				@select="selectCard(item)"
@@ -196,32 +212,33 @@
 				Список воззваний (eldritch invocations) D&D5 на русском и английском языках.
 			</p>
 			<p>
-				Черты можно фильтровать по:
+				Воззвания можно фильтровать по:
 				<ul>
 				  <li>названию</li>
-				  <li>типу</li>
+				  <li>договору</li>
+				  <li>требуемому уровню</li>
 				  <li>источнику</li>
 				</ul>
 			</p>      
 		
 			<h2>
-				Скрытие черт
+				Скрытие воззваний
 			</h2>
 			<p>
-				Карточку черты можно скрыть из общего списка, если нажать на <i class="fa fa-eye-slash" aria-hidden="true"></i> в правом верхнем углу карточки. В таком случае черта исчезнет из общего списка и ее название будет отображаться в самом низу панели фильтров. Если нажать на название, черта вернется в общий список.
+				Карточку воззвания можно скрыть из общего списка, если нажать на <i class="fa fa-eye-slash" aria-hidden="true"></i> в правом верхнем углу карточки. В таком случае воззвание исчезнет из общего списка и его название будет отображаться в самом низу панели фильтров. Если нажать на название, воззвание вернется в общий список.
 			</p>
 			<h2>
-				Закрепление черт
+				Закрепление воззваний
 			</h2>
 			<p>
-				Карточки черт можно закреплять - в таком случае они будут отображаться в самом верху списка. Для закрепления нужно нажать на <i class="fa fa-lock" aria-hidden="true"></i> в левом верхнем углу карточки черт. При закреплении черты, она не исчезает из общего списка. Если нажать на заголовок "Закрепленные черты", закрепленные карточки скроются (чтобы не мешать). На закрепленные черты не действуют никакие фильтры.
+				Карточки воззваний можно закреплять - в таком случае они будут отображаться в самом верху списка. Для закрепления нужно нажать на <i class="fa fa-lock" aria-hidden="true"></i> в левом верхнем углу карточки воззвания. При закреплении воззвания, оно не исчезает из общего списка. Если нажать на заголовок "Закрепленные воззвания", закрепленные карточки скроются (чтобы не мешать). На закрепленные воззвания не действуют никакие фильтры.
 			</p>
 
 			<h2>
-				Выделение черт
+				Выделение воззваний
 			</h2>
 			<p>
-				Чтобы сотворить что-нибудь сразу с несколькими карточками черт, их можно выделить, кликая по ним с зажатой клавишей [CTRL]. Кроме того, сочетание клавиш [CTRL]+[A] выделит все карточки, или уберет выделение со всех карточек, если они и так уже выделены.
+				Чтобы сотворить что-нибудь сразу с несколькими карточками воззваний, их можно выделить, кликая по ним с зажатой клавишей [CTRL]. Кроме того, сочетание клавиш [CTRL]+[A] выделит все карточки, или уберет выделение со всех карточек, если они и так уже выделены.
 			</p>
 			<p>
 				Когда карточки выделены, массово можно делать следующее:
@@ -231,10 +248,10 @@
 				</ul>
 			</p>
 
-			<h2>Печать черт</h2>
+			<h2>Печать воззваний</h2>
 			<p>
-				Если есть закрепленные черты, то печататься будут только они.<br>
-				Если вы хотите распечатать черты, лучше всего делать это через Chrome (удобные настройки печати). Для этого надо:
+				Если есть закрепленные воззваний, то печататься будут только они.<br>
+				Если вы хотите распечатать воззвания, лучше всего делать это через Chrome (удобные настройки печати). Для этого надо:
 					<ul>
 						<li>нажать сочетание клавиш [Ctrl]+[P]</li>
 					</ul>
@@ -249,14 +266,14 @@
 			
 			
 			<p style="padding: 3em 0; text-align: center">
-				<a class="button" id="showAllItems" href="#" v-show="bAppIsReady" @click.stop="showAllItems">Показать все черты</a>
+				<a class="button" id="showAllItems" href="#" v-show="bAppIsReady" @click.stop="showAllItems">Показать все воззвания</a>
 			</p>
 			
 			<p>
-				Если есть вопросы или предложения - <a style="color: #0288D1" href="https://tentaculus.ru/message?theme=dndfeats">пишите</a>.
+				Если есть вопросы или предложения - <a style="color: #0288D1" href="https://tentaculus.ru/message?theme=dndinvocations">пишите</a>.
 			</p>
 			<p>
-				<a style="color: #0288D1"  href="https://github.com/Etignis/DnD_Feats" target="_blanc">Страница проекта на GitHub.</a>
+				<a style="color: #0288D1"  href="https://github.com/Etignis/DnD_Warlock_Invocations" target="_blanc">Страница проекта на GitHub.</a>
 			</p>
 		</div>
 		

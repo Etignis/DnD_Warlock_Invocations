@@ -100,18 +100,11 @@
 }
 .cardContainer{
     page-break-inside: avoid;
-    width: 2.5in;
+    width: auton;
     margin-right: 1px;
     margin-top: 1px;
-    float: left;
+    float: none;
 
-		.ac, .props, .damage{
-			display: block;
-			padding: 0.1em 0.9em;
-		}
-		.weight{
-			margin-left: .2em;
-		}
 		.bottomPanel{
 			position: absolute;
       text-align: center;
@@ -126,26 +119,29 @@
       width: auto;
       max-width: 90rem;
       margin: 0 auto;
+				//overflow: hidden;
       .ItemCard {
         height: auto;
-        //background: @mainColor;
+        background: none;
         //border: 2px solid @mainColor;
-        border-width: 3px;
+        border-width: 1px;
         position: relative;
         color: @m-gray - #111;
         margin-bottom: 1.5rem;
+				border: 1px solid #ddd;
 
         .content{
           position: relative;
           min-height: 19rem;
           background-image: none;
+				border-radius: 0.2rem;
          // background-position: right top;
         }
         .header_info{
           display: flex;
           flex-direction: row;
           flex-wrap: wrap;
-          border-bottom: 1px solid @mainColor;
+          border-bottom: none; /*1px solid @mainColor;*/
 
           div, h1{
             margin-right: 0.5rem;
@@ -153,6 +149,7 @@
           }
 					h1{
 						padding-top: 0.1em;
+						text-align: left;
 					}
           .subtitle{
             margin-left: 1.4rem;
@@ -160,6 +157,7 @@
             text-align: left;
           }
 					.prerequisite {
+						margin-top: 0.2em;
 						margin-left: 1em;
 						font-style: italic;
 					}
@@ -191,17 +189,37 @@
 					bottom: 1em;
 				}
       }
+			
+		
+
+			h1{
+				font-size: 120%;
+				text-transform: uppercase;
+				margin: 0;// 1em 0 0;
+				font-weight: normal;
+				color: #770002;
+				text-align: left;
+			}
     }
 }
 
 .ItemCard{
-    height: 3.5in;
+    height: auto;
     background: @mainColor;
-    border: 9px solid @mainColor;
-    //border-bottom-width: 25px;
-    //overflow: hidden;
+    border: 3px solid @mainColor;
     position: relative;
     color: @m-gray - #111;
+		
+		    float: none;
+    width: auto;
+    max-width: 90rem;
+    margin: 0 auto;
+		
+		    height: auto;
+    border-width: 3px;
+    position: relative;
+    color: #666666;
+    margin-bottom: 1.5rem;
 
     &.selected{
         transform: scale(1.02); /* scale(0.94);*/
@@ -238,27 +256,29 @@
       }
     }
     .content{
-        border-radius: @radius;
-        background: @white;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
+			border-radius: @radius;
+			background: @white;
+			
+			display: flex;
+			flex-direction: column;
+			flex-wrap: nowrap;
+			align-items: stretch;
 
-        display: flex;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        align-items: stretch;
-
-        background-repeat: no-repeat;
-        background-position: center center /*5em*/;
-        background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center center /*5em*/;
+			background-size: contain;
+			
+			min-height: 19rem;
     }
     .header_info{
-      flex-direction: column;
-      flex-wrap: nowrap;
-      align-items: stretch;
+      /* flex-direction: column; */
+      /* flex-wrap: nowrap; */
+      /* align-items: stretch; */
+			
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			border-bottom: 1px solid #000;
     }
     .bottom_info{
       flex-direction: column;
@@ -293,38 +313,32 @@
         text-transform: uppercase;
         background: @bgwhite;
         // border-bottom: 2px solid @mainColor;
+				padding-top: 0.1em;
     }
     .subtitle{
         text-align: center;
         background: @bgwhite;
     }
-    .coast{
-      /*position: absolute;
-      text-align: center;
-      bottom: 2rem;
-      right: 1.4rem;
-      left: 1.4rem;*/
-      
-      //padding: 0 0 1em 0;
-			padding-left: 0.1em;
-    }
-		.weight{
-			padding-right: 0.1em;
-		}
+
 
     .info{
-      //font-size: 75%;
+
       margin-top: auto;
       margin-bottom: 1.6rem;
-      //margin-bottom: 1.5em;
+
       overflow-y: auto;
       color: @black;
-      //z-index: 99;
-      display: none;
-      //flex-shrink: 99;
-      //flex-grow: 99;
+
       background: @white;
       line-height: normal;
+			
+	  display: block;
+    margin-top: 0;
+    padding: 0.9em;
+    margin-bottom: 2rem;
+    padding-bottom: 0;
+    max-height: 900rem;
+    line-height: 140%;
 
 			.outLinks();
 
@@ -416,89 +430,3 @@
         text-shadow: 0 0 2px @color;
     }
 }
-
-.weapon{
-  @mainColor: #e91e63;
-    .ItemCard{
-        background-color: @mainColor;
-        border-color: @mainColor;
-    }
-  &.textView{
-    h1{
-      color: @mainColor;
-    }
-  }
-}
-.armor{
-  @mainColor: #4fc3f7;
-    .ItemCard{
-        background-color: @mainColor;
-        border-color: @mainColor;
-    }
-  &.textView{
-    h1{
-      color: @mainColor;
-    }
-  }
-}/*
-.regular{
-  @mainColor: #ffb74d;
-    .ItemCard{
-        background-color: @mainColor;
-        border-color: @mainColor;
-    }
-  &.textView{
-    h1{
-      color: @mainColor;
-    }
-  }
-}*/
-.racial{
-  @mainColor: #ffb74d;
-    .ItemCard{
-        background-color: @mainColor;
-        border-color: @mainColor;
-    }
-  &.textView{
-    h1{
-      color: @mainColor;
-    }
-  }
-}
-.skill{
-  @mainColor: #81C784;
-    .ItemCard{
-        background-color: @mainColor;
-        border-color: @mainColor;
-    }
-  &.textView{
-    h1{
-      color: @mainColor;
-    }
-  }
-}
-.tool{
-  @mainColor: #A1887F;
-  .ItemCard {
-    background-color: @mainColor;
-    border-color: @mainColor;
-  }
-  &.textView{
-    h1{
-      color: @mainColor;
-    }
-  }
-}
-.world{
-  @mainColor: #ba68c8;
-  .ItemCard {
-    background-color: @mainColor;
-    border-color: @mainColor;
-  }
-  &.textView{
-    h1{
-      color: @mainColor;
-    }
-  }
-}
-

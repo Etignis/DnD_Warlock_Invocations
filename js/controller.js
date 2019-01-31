@@ -364,12 +364,27 @@ Vue.component('card', {
 		pre: {
 			type: String,
 			default: ""
+		},
+		view: {
+			type: String,
+			default: "card"
+		},
+		spellTitle: {
+			type: String,
+			default: ""
+		},
+		levelTitle: {
+			type: String,
+			default: ""
+		},
+		pactTitle: {
+			type: String,
+			default: ""
 		}
 	},
 	data: function(){
 		return {
-			mainClass: "cardContainer",
-			viewClass: "textView"
+			mainClass: "cardContainer"
 		};
 	},
 	computed: {
@@ -396,9 +411,15 @@ Vue.component('card', {
 			if(this.pactType) a.push(this.pactType);
 			if(this.spellType) a.push(this.spellType);
 			if(this.minLevel) a.push(this.minLevel);
-			let sText = a.length>1? "Требуются ": "Требуется ";
+			let sText = a.length>1? "Требуются: ": "Требуется ";
 			
 			return a.length>0? sText + a.join(", "): "";
+		},
+		cardView: function(){
+			return this.view == 'card';
+		},
+		viewClass: function(){
+			return this.cardView? "cardView": "textView";
 		}
 	},
 	methods: {
@@ -441,9 +462,11 @@ var app = new Vue({
 		aSpellTypes: oSpellTypes,
 		aLanguages: oLanguages,
 		aSort: oSort,
+		aView: oView,
 		aItems: allItems,
 		sLang: "ru",
 		sSort: "typeAlpha",
+		sView: "card",
 		sLevel: "0",
 		sSearch: "",
 		aHiddenItems: [],
@@ -561,6 +584,23 @@ var app = new Vue({
 			return a;
 		},
 		
+		aViewtList: function(){
+			let a=[];
+			for (var key in this.aView){
+				if(this.aView[key].visible !== false){
+					a.push({
+						key: key,
+						title: this.aView[key].text[this.sLang].title
+					});
+				}
+			}
+			return a;
+		},
+		
+		sViewSelected: function(){
+			return this.aView[this.sView].text[this.sLang].title;
+		},
+		
 		aLevel: function() {
 			var a = this.aItems.filter(el => el.en.minLevel).map(el => el.en.minLevel);
 			a.push(0);
@@ -593,8 +633,7 @@ var app = new Vue({
 			//return this.aLevel[this.sLevel].text[this.sLang].title;
 			return this.aLevelList.filter(el => el.key == this.sLevel)[0].title;
 			//return String(this.sLevel);
-		},
-		
+		},		
 		
 		sNameInput: function(){
 			return this.sSearch.toLowerCase();
@@ -742,6 +781,11 @@ var app = new Vue({
 			this.updateHash();
 			this.setConfig("sort", sKey);
 		},
+		onViewChange: function(sKey){
+			this.sView = sKey;
+			this.updateHash();
+			this.setConfig("view", sKey);
+		},
 		onLevelChange: function(sKey){
 			this.sLevel = sKey;
 			this.updateHash();
@@ -798,7 +842,7 @@ var app = new Vue({
 			} else {
 				let id = oCard.id;
 				let nInd = this.aLockedItems.indexOf(id);
-				if(nInd>1) {
+				if(nInd>-1) {
 					this.aLockedItems.splice(nInd, 1);
 				}
 			}
@@ -882,6 +926,9 @@ var app = new Vue({
 			// if(this.sSort != "typeAlpha") {
 				// aHash.push("sort="+this.sSort);
 			// }
+			if(this.sView != "card") {
+				aHash.push("view="+this.sView);
+			}
 			if(this.sLevel != "0") {
 				aHash.push("level="+this.sLevel);
 			}
@@ -903,7 +950,7 @@ var app = new Vue({
 			sHash.split("&").forEach(function(sPair){
 				aPair = sPair.split("=");
 				if(aPair[1]){
-					oHash[aPair[0]] = aPair[1].split(",")
+					oHash[aPair[0]] = /,/.test(aPair[1])? aPair[1].split(",") : aPair[1]
 				}
 			}.bind(this));
 			
@@ -939,6 +986,9 @@ var app = new Vue({
 			}
 			if(oHash.sort) {
 				this.sSort = oHash.sort
+			}
+			if(oHash.view) {
+				this.sView = oHash.view
 			}
 			if(oHash.level) {
 				this.sLevel = oHash.level
