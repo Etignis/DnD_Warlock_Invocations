@@ -125,6 +125,19 @@
 			>
 			</custom-select>
 		</div>
+		
+		<div class='mediaWidth'>
+			<button
+				@click="downloadDB"
+			>Скачать</button>
+		</div>
+		<div class='mediaWidth'>
+			<input type="file" style="display: none" ref="fileUploader" id="fileUploader" @change="fileSelected">
+			<button
+				@click="uploadDB">
+				Загрузить</button>
+		</div>
+		
 		<div class='mediaWidth' v-show="aHiddenItemsList.length>0">
 			<label class="filterLabel">Скрытые воззвания ({{aHiddenItemsList.length}})</label>
 			<div id="HiddenItems">
@@ -293,6 +306,7 @@
   <!-- <script type='text/javascript' src='https://tentaculus.ru/_js/jquery.mobile.custom.min.js' defer></script> -->
   <script type='text/javascript' src='data/allItems.js?v=0.2' defer></script>
   <script type='text/javascript' src='js/controller.js?v=0.1' defer></script>
+  <script type='text/javascript' src="js/FileSaver.min.js"></script>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {
