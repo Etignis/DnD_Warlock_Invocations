@@ -4,7 +4,7 @@
   <title>Воззвания Колдуна</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link rel="stylesheet" type="text/css" href="css/style.css?v=0.5">
+  <link rel="stylesheet" type="text/css" href="css/style.css?v=0.6">
   <meta name="description" content="Воззвания Колдуна D&D5">
   <link href="../_fonts/FortAwesome/css/font-awesome.min.css" rel="stylesheet">
   <link rel="shortcut icon" href="favicon.ico" />
@@ -128,14 +128,25 @@
 		
 		<div class='mediaWidth'>
 			<button
+				class="btn"
 				@click="downloadDB"
 			>Скачать</button>
 		</div>
 		<div class='mediaWidth'>
 			<input type="file" style="display: none" ref="fileUploader" id="fileUploader" @change="fileSelected">
 			<button
+				class="btn"
 				@click="uploadDB">
 				Загрузить</button>
+		</div>
+		<div class='mediaWidth'>
+			<check-button
+				id="EditorCheckbox"
+				title="Редактирование"
+				:checked="bEditMode"
+				@press="onEditModePress"
+			>
+			</check-button>
 		</div>
 		
 		<div class='mediaWidth' v-show="aHiddenItemsList.length>0">
@@ -178,6 +189,7 @@
 					:selected="item.selected"
 					:locked="item.locked"
 					:view="sView"
+					:editable="item.editable"
 					@unlock="unlockCard(item)"
 					@select="selectLockedCard(item)"
 				>
@@ -209,6 +221,7 @@
 				:selected="item.selected"
 				:pre="item.pre"
 				:view="sView"
+				:editable="item.editable"
 				@lock="lockCard(item)"
 				@hide="hideCard(item)"
 				@select="selectCard(item)"

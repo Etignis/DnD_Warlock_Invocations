@@ -35,7 +35,43 @@ Vue.component('modalWin', {
 	</div>
 </div>`
 });
+Vue.component('check-button', {
+	props: {
+		id: {
+			type: String,
+			default: ""
+		},
+		title: {
+			type: String,
+			default: ""
+		},
+		checked: {
+			type: Boolean,
+			default: false
+		}
+	},
+	data: function(){
+		return {};
+	},
+	methods: {
+		press: function(oEvent){
+			this.$emit('press');
+		}
+	},
+	computed: {
+		innerId: function(){
+			return "chb_"+this.id;
+		},
+		value: function(){
+			return this.checked? "checked='checked'" : "";
+		}
+	},
 
+	template: `<div :id="id" class="customCheckbox" @click.stop="press">
+	<input type="checkbox" :id="innerId" :checked="checked">
+	<span class="label">{{title}}</span>
+</div>`
+});
 Vue.component('searchfield', {
 	props: {
 		id: {
@@ -380,6 +416,10 @@ Vue.component('card', {
 		pactTitle: {
 			type: String,
 			default: ""
+		},
+		editable: {
+			type: Boolean,
+			default: false
 		}
 	},
 	data: function(){
@@ -420,6 +460,10 @@ Vue.component('card', {
 		},
 		viewClass: function(){
 			return this.cardView? "cardView": "textView";
+		},
+		
+		editableButtons: function() {
+			return this.editable? "": "display: none";
 		}
 	},
 	methods: {
@@ -434,6 +478,15 @@ Vue.component('card', {
 		},
 		select: function(oEvent){
 			this.$emit('select', oEvent);
+		},
+		
+		onTextCancel: function(){
+			this.$emit('cancel', {id: this.id});
+		},
+		onTextSave: function(oEvent){
+			let oEl = this.$refs.itemText;		
+			let sText = oEl.innerHTML;
+			this.$emit('input', {id: this.id, text: sText});
 		}
 	},
 
@@ -447,8 +500,16 @@ Vue.component('card', {
 				<h1 :title="tooltip">{{name}}</h1>
 				<div class='prerequisite' v-html="prerequisite"></div>
 			</div>
-			<div v-html="text" class='info'></div>
+			<div v-html="text" class='info' :contenteditable="editable"  ref="itemText"></div>
+			
 			<div class='source' :title="srcTitle">{{src}}</div>
+					<div class="sizeButtonsContainer noprint">
+							
+							<span></span>
+							<span class="textCancel" title="Отменить" @click.stop='onTextCancel' :style="editableButtons">✖</span>
+							<span class="textSave" title="Сохранить" @click.stop='onTextSave' :style="editableButtons">✔</span>
+							<span></span>
+					</div>
 		</div>
 	</div>
 </div>`
@@ -482,6 +543,7 @@ var app = new Vue({
 		bSourcesOpend: false,		
 		bCardsAreVisible: false,	
 		bAppIsReady: false,	
+		bEditMode: false, 
 		
 		bModalWinShow: false,
 		sModalWinCont: ""
@@ -672,7 +734,9 @@ var app = new Vue({
 					"minLevel": oItem.en.minLevel? oDict.level.text[this.sLang].title + oItem.en.minLevel : "",
 					"color": oItem.en.type,
 					"locked": this.aLockedItems.indexOf(oItem.en.name)>-1,
-					"selected": this.aSelectedItems.indexOf(oItem.en.name)>-1
+					"selected": this.aSelectedItems.indexOf(oItem.en.name)>-1,
+						
+					"editable": this.bEditMode
 				};
 				if(oItem[this.sLang].pre || oItem.en.pre) {
 					o.pre = oItem[this.sLang].pre || oItem.en.pre;
@@ -714,7 +778,9 @@ var app = new Vue({
 					"minLevel": oItem.en.minLevel? oDict.level.text[this.sLang].title + oItem.en.minLevel : "",
 					"color": oItem.en.type,
 					"locked": this.aLockedItems.indexOf(oItem.en.name)>-1,
-					"selected": this.aSelectedLockedItems.indexOf(oItem.en.name)>-1
+					"selected": this.aSelectedLockedItems.indexOf(oItem.en.name)>-1,
+						
+					"editable": this.bEditMode
 				};
 				if(oItem[this.sLang].pre || oItem.en.pre) {
 					o.pre = oItem[this.sLang].pre || oItem.en.pre;
@@ -1112,6 +1178,30 @@ var app = new Vue({
 				this.oPactTypes = oDB.pactList;
 				this.aLanguages = oDB.oLanguages;
 				this.aItems = oDB.allItems;
+			},
+			
+			onEditModePress: function(){
+				this.bEditMode = !this.bEditMode;
+			},
+			cancelCard: function(oData){
+				let sId = oData.id;
+				let oItem = this.aItems.find(el => el.en.name.toLowerCase().replace(/\s+/,"") == sId.toLowerCase().replace(/\s+/,""));
+				if(oItem) {
+					let sText = oItem[this.sLang].text + "  ";
+				
+					oItem[this.sLang].text = sText;
+				}
+				return false;
+			},
+			saveCard: function(oData){
+				let sId = oData.id;
+				let sText = oData.text;
+				
+				let oItem = this.aItems.find(el => el.en.name.toLowerCase().replace(/\s+/,"") == sId.toLowerCase().replace(/\s+/,""));
+				if(oItem) {
+					oItem[this.sLang].text = sText;
+				}
+				return false;
 			}
 	}
 });
