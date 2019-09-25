@@ -529,6 +529,7 @@ var app = new Vue({
 		sSort: "typeAlpha",
 		sView: "card",
 		sLevel: "0",
+		sMaxLevel: "0",
 		sSearch: "",
 		aHiddenItems: [],
 		aLockedItems: [],
@@ -681,7 +682,7 @@ var app = new Vue({
 				// }
 			// }
 			// return a;
-			let a=this.aLevel.map(el => ({key: el, title: el==0? "Любой" : el}));
+			let a=this.aLevel.map(el => ({key: el, title: el==0? "Не задано" : el}));
 			
 			return a;
 			//return this.aLevel;
@@ -694,6 +695,11 @@ var app = new Vue({
 		sLevelSelected: function(){
 			//return this.aLevel[this.sLevel].text[this.sLang].title;
 			return this.aLevelList.filter(el => el.key == this.sLevel)[0].title;
+			//return String(this.sLevel);
+		},
+		sMaxLevelSelected: function(){
+			//return this.aLevel[this.sLevel].text[this.sLang].title;
+			return this.aLevelList.filter(el => el.key == this.sMaxLevel)[0].title;
 			//return String(this.sLevel);
 		},		
 		
@@ -711,6 +717,7 @@ var app = new Vue({
 					(this.aPactTypeSelected.length? this.aPactTypeSelected.indexOf(oItem.en.pactType)>-1 : true) && 
 					(this.aSpellTypeSelected.length? this.aSpellTypeSelected.indexOf(oItem.en.spellType)>-1 : true) && 
 					(Number(this.sLevel)>0 && Number(oItem.en.minLevel) >= Number(this.sLevel) || this.sLevel == 0 || !this.sLevel) &&
+					(Number(this.sMaxLevel)>0 && Number(oItem.en.minLevel) < Number(this.sMaxLevel) || this.sMaxLevel == 0 || !this.sMaxLevel) &&
 						(
 						oItem.en.name.toLowerCase().indexOf(this.sNameInput)>-1 || 
 						oItem.ru.name.toLowerCase().indexOf(this.sNameInput)>-1
@@ -857,6 +864,11 @@ var app = new Vue({
 			this.updateHash();
 			this.setConfig("level", sKey);
 		},
+		onMaxLevelChange: function(sKey){
+			this.sMaxLevel = sKey;
+			this.updateHash();
+			this.setConfig("maxLevel", sKey);
+		},
 		onSearchName: function(sValue){
 			this.sSearch = sValue.trim();
 			this.updateHash();
@@ -998,6 +1010,9 @@ var app = new Vue({
 			if(this.sLevel != "0") {
 				aHash.push("level="+this.sLevel);
 			}
+			if(this.sMaxLevel != "0") {
+				aHash.push("maxLevel="+this.sLevel);
+			}
 			
 			if(aHash.length>0) {
 				window.location.hash = aHash.join("&").replace(/\s+/g, "_");
@@ -1058,6 +1073,9 @@ var app = new Vue({
 			}
 			if(oHash.level) {
 				this.sLevel = oHash.level
+			}
+			if(oHash.maxLevel) {
+				this.sMaxLevel = oHash.maxLevel
 			}
 			if(oHash.q) {
 				this.sSearch = oHash.q[0];

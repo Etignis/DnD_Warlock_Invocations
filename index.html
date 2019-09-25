@@ -61,10 +61,21 @@
 			<custom-select
 				id="LevelSelect"
 				ref="LevelSelect"
-				title="Минимальный уровень"
+				title="Требуется уровень"
 				:selected="sLevelSelected"
 				:items="aLevelList"
 				@iclick="onLevelChange($event)"
+			>
+			</custom-select>
+		</div>
+		<div class='mediaWidth'>
+			<custom-select
+				id="MaxLevelSelect"
+				ref="MaxLevelSelect"
+				title="Меньше уровня"
+				:selected="sMaxLevelSelected"
+				:items="aLevelList"
+				@iclick="onMaxLevelChange($event)"
 			>
 			</custom-select>
 		</div>
